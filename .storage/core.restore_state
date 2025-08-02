@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "core.restore_state",
+  "data": [
+    {
+      "state": {"entity_id":"conversation.home_assistant","state":"unknown","attributes":{"friendly_name":"Home Assistant","supported_features":1},"last_changed":"2025-08-02T17:56:33.602416+00:00","last_reported":"2025-08-02T17:56:33.602416+00:00","last_updated":"2025-08-02T17:56:33.602416+00:00","context":{"id":"01K1NYV9P2QPGGZDGANNAS8SN0","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2025-08-02T20:11:41.357462+00:00"
+    },
+    {
+      "state": {"entity_id":"event.backup_automatic_backup","state":"unknown","attributes":{"event_types":["completed","failed","in_progress"],"event_type":null,"friendly_name":"Backup Automatic backup"},"last_changed":"2025-08-02T17:56:33.916061+00:00","last_reported":"2025-08-02T17:56:33.916061+00:00","last_updated":"2025-08-02T17:56:33.916061+00:00","context":{"id":"01K1NYV9ZWXYZGZZW913Q9BYKH","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "last_event_type": null,
+        "last_event_attributes": null
+      },
+      "last_seen": "2025-08-02T20:11:41.357462+00:00"
+    },
+    {
+      "state": {"entity_id":"person.administrator","state":"unknown","attributes":{"editable":true,"id":"administrator","device_trackers":[],"user_id":"5d2bddced87e4541a40fda49dad8a566","friendly_name":"administrator"},"last_changed":"2025-08-02T17:56:34.255944+00:00","last_reported":"2025-08-02T17:56:41.346485+00:00","last_updated":"2025-08-02T17:56:41.346485+00:00","context":{"id":"01K1NYVH82PWVN83QWE2DR630Z","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2025-08-02T20:11:41.357462+00:00"
+    },
+    {
+      "state": {"entity_id":"tts.google_translate_en_com","state":"unknown","attributes":{"friendly_name":"Google Translate en com"},"last_changed":"2025-08-02T17:56:40.920057+00:00","last_reported":"2025-08-02T17:56:40.920057+00:00","last_updated":"2025-08-02T17:56:40.920057+00:00","context":{"id":"01K1NYVGTR8ZSC1YXMBDW3CGZA","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2025-08-02T20:11:41.357462+00:00"
+    },
+    {
+      "state": {"entity_id":"button.irrigation_relais1_reboot","state":"unknown","attributes":{"device_class":"restart","friendly_name":"Irrigation-Relais1 Reboot"},"last_changed":"2025-08-02T17:56:41.242947+00:00","last_reported":"2025-08-02T17:56:41.242947+00:00","last_updated":"2025-08-02T17:56:41.242947+00:00","context":{"id":"01K1NYVH4T7RSPB5B3MR9FCMW6","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2025-08-02T20:11:41.357462+00:00"
+    },
+    {
+      "state": {"entity_id":"update.irrigation_relais1_firmware","state":"off","attributes":{"auto_update":false,"display_precision":0,"installed_version":"1.2.3-matter22","in_progress":false,"latest_version":"1.2.3-matter22","release_summary":null,"release_url":"https://shelly-api-docs.shelly.cloud/gen2/changelog/","skipped_version":null,"title":null,"update_percentage":null,"device_class":"firmware","entity_picture":"https://brands.home-assistant.io/_/shelly/icon.png","friendly_name":"Irrigation-Relais1 Firmware","supported_features":5},"last_changed":"2025-08-02T18:11:00.043051+00:00","last_reported":"2025-08-02T18:11:15.835892+00:00","last_updated":"2025-08-02T18:11:00.043051+00:00","context":{"id":"01K1NZNQTBS5FRAKF8BCXDHRPR","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2025-08-02T20:11:41.357462+00:00"
+    },
+    {
+      "state": {"entity_id":"input_number.lux_sum","state":"2000.0","attributes":{"initial":null,"editable":true,"min":0.0,"max":10000.0,"step":500.0,"mode":"slider","unit_of_measurement":"lux","icon":"mdi:sun-compass","friendly_name":"Lux-Sum"},"last_changed":"2025-08-02T18:11:05.764189+00:00","last_reported":"2025-08-02T18:11:05.764189+00:00","last_updated":"2025-08-02T18:11:05.764189+00:00","context":{"id":"01K1NZNXD38QYBD8H3N1MXC2R9","parent_id":null,"user_id":"5d2bddced87e4541a40fda49dad8a566"}},
+      "extra_data": null,
+      "last_seen": "2025-08-02T20:11:41.357462+00:00"
+    },
+    {
+      "state": {"entity_id":"input_number.lux_last_threshold","state":"2000.0","attributes":{"initial":null,"editable":true,"min":0.0,"max":10000.0,"step":1.0,"mode":"box","unit_of_measurement":"lux","icon":"mdi:sigma","friendly_name":"lux_last_threshold"},"last_changed":"2025-08-02T18:11:15.812748+00:00","last_reported":"2025-08-02T18:11:15.812748+00:00","last_updated":"2025-08-02T18:11:15.812748+00:00","context":{"id":"01K1NZNXD4CZXK9KWWBZFH4CEP","parent_id":"01K1NZNXD38QYBD8H3N1MXC2R9","user_id":null}},
+      "extra_data": null,
+      "last_seen": "2025-08-02T20:11:41.357462+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.bewasserung_nach_lux_anstieg","state":"on","attributes":{"id":"1754158237996","last_triggered":"2025-08-02T18:11:05.765933+00:00","mode":"single","current":0,"friendly_name":"Bewässerung nach Lux-Anstieg"},"last_changed":"2025-08-02T18:10:40.990250+00:00","last_reported":"2025-08-02T18:11:15.813414+00:00","last_updated":"2025-08-02T18:11:15.813414+00:00","context":{"id":"01K1NZP775CTSWXKTE072H67K8","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2025-08-02T20:11:41.357462+00:00"
+    },
+    {
+      "state": {"entity_id":"update.home_assistant_supervisor_update","state":"off","attributes":{"auto_update":true,"display_precision":0,"installed_version":"2025.07.2","in_progress":false,"latest_version":"2025.07.2","release_summary":null,"release_url":"https://github.com/home-assistant/supervisor/releases/tag/2025.07.2","skipped_version":null,"title":"Home Assistant Supervisor","update_percentage":null,"entity_picture":"https://brands.home-assistant.io/hassio/icon.png","friendly_name":"Home Assistant Supervisor Update","supported_features":1},"last_changed":"2025-08-02T19:06:28.826620+00:00","last_reported":"2025-08-02T19:11:29.022728+00:00","last_updated":"2025-08-02T19:06:28.826620+00:00","context":{"id":"01K1P2VAJT7X3PS46RX504G77J","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2025-08-02T20:11:41.357462+00:00"
+    },
+    {
+      "state": {"entity_id":"update.home_assistant_core_update","state":"off","attributes":{"auto_update":false,"display_precision":0,"installed_version":"2025.7.4","in_progress":false,"latest_version":"2025.7.4","release_summary":null,"release_url":"https://www.home-assistant.io/latest-release-notes/","skipped_version":null,"title":"Home Assistant Core","update_percentage":null,"entity_picture":"https://brands.home-assistant.io/homeassistant/icon.png","friendly_name":"Home Assistant Core Update","supported_features":11},"last_changed":"2025-08-02T19:06:28.830541+00:00","last_reported":"2025-08-02T19:11:29.023030+00:00","last_updated":"2025-08-02T19:06:28.830541+00:00","context":{"id":"01K1P2VAJYPB6EG40RPNGFB14P","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2025-08-02T20:11:41.357462+00:00"
+    },
+    {
+      "state": {"entity_id":"update.node_red_update","state":"off","attributes":{"auto_update":false,"display_precision":0,"installed_version":"20.0.0","in_progress":false,"latest_version":"20.0.0","release_summary":null,"release_url":null,"skipped_version":null,"title":"Node-RED","update_percentage":null,"entity_picture":"/api/hassio/addons/a0d7b954_nodered/icon","friendly_name":"Node-RED Update","supported_features":25},"last_changed":"2025-08-02T19:06:28.831648+00:00","last_reported":"2025-08-02T19:11:29.023177+00:00","last_updated":"2025-08-02T19:06:28.831648+00:00","context":{"id":"01K1P2VAJZ9VBJ5YCZATKW4NMF","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2025-08-02T20:11:41.357462+00:00"
+    },
+    {
+      "state": {"entity_id":"update.studio_code_server_update","state":"off","attributes":{"auto_update":false,"display_precision":0,"installed_version":"5.19.3","in_progress":false,"latest_version":"5.19.3","release_summary":null,"release_url":null,"skipped_version":null,"title":"Studio Code Server","update_percentage":null,"entity_picture":"/api/hassio/addons/a0d7b954_vscode/icon","friendly_name":"Studio Code Server Update","supported_features":25},"last_changed":"2025-08-02T19:06:28.832902+00:00","last_reported":"2025-08-02T19:11:29.023286+00:00","last_updated":"2025-08-02T19:06:28.832902+00:00","context":{"id":"01K1P2VAK0RAFCXP5CZ3C9Q521","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2025-08-02T20:11:41.357462+00:00"
+    },
+    {
+      "state": {"entity_id":"update.home_assistant_operating_system_update","state":"off","attributes":{"auto_update":false,"display_precision":0,"installed_version":"16.0","in_progress":false,"latest_version":"16.0","release_summary":null,"release_url":"https://github.com/home-assistant/operating-system/releases/tag/16.0","skipped_version":null,"title":"Home Assistant Operating System","update_percentage":null,"entity_picture":"https://brands.home-assistant.io/homeassistant/icon.png","friendly_name":"Home Assistant Operating System Update","supported_features":11},"last_changed":"2025-08-02T19:06:28.834461+00:00","last_reported":"2025-08-02T19:11:29.023482+00:00","last_updated":"2025-08-02T19:06:28.834461+00:00","context":{"id":"01K1P2VAK2JGP5PCAB9F2YVTCV","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2025-08-02T20:11:41.357462+00:00"
+    },
+    {
+      "state": {"entity_id":"update.z_wave_js_update","state":"off","attributes":{"auto_update":false,"display_precision":0,"installed_version":"0.20.0","in_progress":false,"latest_version":"0.20.0","release_summary":null,"release_url":null,"skipped_version":null,"title":"Z-Wave JS","update_percentage":null,"entity_picture":"/api/hassio/addons/core_zwave_js/icon","friendly_name":"Z-Wave JS Update","supported_features":25},"last_changed":"2025-08-02T17:49:32.465871+00:00","last_reported":"2025-08-02T17:49:32.465871+00:00","last_updated":"2025-08-02T17:49:32.465871+00:00","context":{"id":"01K1NYEEDHENRW0DX08D8985TN","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2025-08-02T17:51:19.369251+00:00"
+    },
+    {
+      "state": {"entity_id":"button.shellyoutdoorsg3_e4b323337d64_reboot","state":"unknown","attributes":{"device_class":"restart","friendly_name":"Irrigation-Relais1 Reboot"},"last_changed":"2025-08-02T17:52:48.561778+00:00","last_reported":"2025-08-02T17:53:30.618447+00:00","last_updated":"2025-08-02T17:53:30.618447+00:00","context":{"id":"01K1NYNPZTCY338CW2AA4Q9M2W","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2025-08-02T17:53:30.686937+00:00"
+    },
+    {
+      "state": {"entity_id":"update.shellyoutdoorsg3_e4b323337d64_firmware","state":"off","attributes":{"auto_update":false,"display_precision":0,"installed_version":"1.2.3-matter22","in_progress":false,"latest_version":"1.2.3-matter22","release_summary":null,"release_url":"https://shelly-api-docs.shelly.cloud/gen2/changelog/","skipped_version":null,"title":null,"update_percentage":null,"device_class":"firmware","entity_picture":"https://brands.home-assistant.io/_/shelly/icon.png","friendly_name":"Irrigation-Relais1 Firmware","supported_features":5},"last_changed":"2025-08-02T17:52:48.667694+00:00","last_reported":"2025-08-02T17:53:30.619464+00:00","last_updated":"2025-08-02T17:53:30.619464+00:00","context":{"id":"01K1NYNPZV3BSBS7Q3V2GVN7V5","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2025-08-02T17:53:30.696537+00:00"
+    }
+  ]
+}

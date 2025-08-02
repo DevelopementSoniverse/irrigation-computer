@@ -1,0 +1,26 @@
+- id: '1754158237996'
+  alias: Bewässerung nach Lux-Anstieg
+  description: ''
+  triggers:
+  - entity_id: input_number.lux_sum
+    trigger: state
+  conditions:
+  - condition: template
+    value_template: "{{ (states('input_number.lux_sum')|float) -\n   (states('input_number.lux_last_threshold')|float)
+      \ >= 1000 }}\n"
+  actions:
+  - target:
+      entity_id: switch.irrigation_relais1
+    action: switch.turn_on
+    data: {}
+  - delay: 00:00:10
+  - target:
+      entity_id: switch.irrigation_relais1
+    action: switch.turn_off
+    data: {}
+  - target:
+      entity_id: input_number.lux_last_threshold
+    data:
+      value: '{{ states(''input_number.lux_sum'') }}'
+    action: input_number.set_value
+  mode: single
