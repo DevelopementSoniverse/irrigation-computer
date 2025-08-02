@@ -1,0 +1,14 @@
+lux_last_threshold:
+  name: last Lux
+  min: 0
+  max: 100000
+  step: 1
+  icon: mdi:sigma # ∑-Symbol
+  mode: box # Textfield no Slider
+
+lux_sum:
+  name: Lux-Sum
+  min: 0
+  max: 10000
+  step: 1
+  icon: mdi:sigma     # ∑-Symbol
