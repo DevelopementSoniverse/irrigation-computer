@@ -1,0 +1,22 @@
+template:
+  - sensor:
+      - name: Global Radiation Scaled
+        unique_id: global_radiation_scaled
+        unit_of_measurement: "W/m²"
+        state_class: measurement
+        device_class: irradiance
+        state: >
+          {{ (states('input_number.global_radiation') | float(0))
+             * (states('input_number.radiation_speed') | float(1)) }}
+
+sensor:
+  - platform: integration
+    name: Global Radiation Energy
+    source: sensor.global_radiation_scaled
+    unit_time: h      # → Wh/m²
+    method: trapezoidal
+    round: 2
+
+utility_meter:
+  radiation_since_irrigation:
+    source: sensor.global_radiation_energy

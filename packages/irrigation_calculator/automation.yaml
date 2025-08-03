@@ -1,0 +1,21 @@
+automation:
+  - id: irrigation_by_radiation
+    alias: "Irrigation – Radiation Trigger"
+    mode: single
+    trigger:
+      - platform: template
+        value_template: >
+          {% set phase = states('input_select.tomato_phase') %}
+          {% set rad = states('sensor.radiation_since_irrigation') | float(0) %}
+          {% set thresholds = {
+              'Planting': states('input_number.threshold_rad_phase1') | float(0),
+              'Fruit Set': states('input_number.threshold_rad_phase2') | float(0),
+              'Ripening':  states('input_number.threshold_rad_phase3') | float(0)
+            } %}
+          {{ rad >= thresholds.get(phase, 1e9) }}
+    condition:
+      - condition: time
+        after: "07:00:00"
+        before: "19:00:00"
+    action:
+      - service: script.irrigation_run

@@ -13,9 +13,10 @@ views:
           - sensor.global_radiation_energy
           - sensor.radiation_since_irrigation
       - type: entities
-        title: "Manual Radiation Input (Slider)"
+        title: "Manual Radiation Input"
         entities:
           - input_number.global_radiation
+          - input_number.radiation_speed
       - type: button
         name: "Manual Irrigation"
         icon: mdi:play-circle
@@ -27,3 +28,4 @@ views:
         entity: sensor.radiation_since_irrigation
         min: 0
         max: 300
+        needle: true

@@ -14,12 +14,12 @@ homeassistant:
 
 lovelace:
   dashboards:
-    irrigation-control:          # interne ID, frei wählbar
-      mode: yaml                 # Datei-basiert
-      title: Irrigation Control  # angezeigter Titel in der Seitenleiste
+    irrigation-control:
+      mode: yaml
+      title: Irrigation Control
       icon: mdi:sprinkler-variant
       show_in_sidebar: true
-      filename: dashboards/irrigation_control.yaml  # relativer Pfad zu config/
+      filename: dashboards/irrigation_control.yaml
     irrigation-settings:
       mode: yaml
       title: Irrigation Settings
