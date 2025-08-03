@@ -11,3 +11,18 @@ scene: !include scenes.yaml
 
 homeassistant:
   packages: !include_dir_named packages
+
+lovelace:
+  dashboards:
+    irrigation-control:          # interne ID, frei wählbar
+      mode: yaml                 # Datei-basiert
+      title: Irrigation Control  # angezeigter Titel in der Seitenleiste
+      icon: mdi:sprinkler-variant
+      show_in_sidebar: true
+      filename: dashboards/irrigation_control.yaml  # relativer Pfad zu config/
+    irrigation-settings:
+      mode: yaml
+      title: Irrigation Settings
+      icon: mdi:cog-outline
+      show_in_sidebar: true
+      filename: dashboards/irrigation_settings.yaml

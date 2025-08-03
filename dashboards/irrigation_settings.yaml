@@ -1,0 +1,18 @@
+title: "Irrigation Settings"
+views:
+  - title: "Settings"
+    path: settings
+    icon: mdi:cog-outline
+    cards:
+      - type: entities
+        title: "Thresholds"
+        show_header_toggle: false
+        entities:
+          - input_select.tomato_phase
+          - input_number.threshold_rad_phase1
+          - input_number.threshold_rad_phase2
+          - input_number.threshold_rad_phase3
+      - type: entities
+        title: "Irrigation Parameters"
+        entities:
+          - input_number.watering_duration_sec

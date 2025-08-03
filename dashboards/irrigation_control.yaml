@@ -1,0 +1,29 @@
+title: "Irrigation Control"
+views:
+  - title: "Control"
+    path: control
+    icon: mdi:sprinkler-variant
+    cards:
+      - type: entities
+        title: "System Status"
+        show_header_toggle: false
+        entities:
+          - entity: switch.irrigation_relais1
+            name: Irrigation Relay
+          - sensor.global_radiation_energy
+          - sensor.radiation_since_irrigation
+      - type: entities
+        title: "Manual Radiation Input (Slider)"
+        entities:
+          - input_number.global_radiation
+      - type: button
+        name: "Manual Irrigation"
+        icon: mdi:play-circle
+        tap_action:
+          action: call-service
+          service: script.irrigation_run
+      - type: gauge
+        name: "Radiation since last irrigation"
+        entity: sensor.radiation_since_irrigation
+        min: 0
+        max: 300
