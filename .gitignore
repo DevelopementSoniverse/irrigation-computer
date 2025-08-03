@@ -3,5 +3,6 @@ secrets.yaml
 .storage/
 *.db
 *.log
+*.log.*
 home-assistant_v2.db-wal
 home-assistant_v2.db-shm
