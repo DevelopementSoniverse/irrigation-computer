@@ -3,29 +3,60 @@ views:
   - title: "Control"
     path: control
     icon: mdi:sprinkler-variant
+
     cards:
-      - type: entities
-        title: "System Status"
-        show_header_toggle: false
-        entities:
-          - entity: switch.irrigation_relais1
-            name: Irrigation Relay
-          - sensor.global_radiation_energy
-          - sensor.radiation_since_irrigation
-      - type: entities
-        title: "Manual Radiation Input"
-        entities:
-          - input_number.global_radiation
-          - input_number.radiation_speed
-      - type: button
-        name: "Manual Irrigation"
-        icon: mdi:play-circle
-        tap_action:
-          action: call-service
-          service: script.irrigation_run
-      - type: gauge
-        name: "Radiation since last irrigation"
-        entity: sensor.radiation_since_irrigation
-        min: 0
-        max: 300
-        needle: true
+      # ────────── Row 1 ────────────────────────────────────────────
+      - type: vertical-stack
+        title: "Row 1"
+        cards:
+          # System overview (compact)
+          - type: glance
+            title: "System"
+            show_state: true
+            entities:
+              - entity: switch.irrigation_relais1
+                name: "Pump"
+              - entity: sensor.irrigation_relais1_power
+                name: "Actual Power"
+              - entity: sensor.irrigation_relais1_energy
+                name: "Total Consumption"
+
+          # Manual irrigation trigger
+          - type: button
+            name: "Manual Irrigation"
+            icon: mdi:play-circle
+            tap_action:
+              action: call-service
+              service: script.irrigation_run
+
+          # Radiation gauge with colour change above 45 Wh/m²
+          - type: gauge
+            name: "Radiation since last irrigation"
+            entity: sensor.radiation_since_irrigation
+            min: 0
+            max: 100
+            needle: true
+            segments:
+              - from: 0
+                color: "#9e9e9e"
+              - from: 45
+                color: "#00bcd4"
+                label: "Irrigation"
+
+      # ────────── Weatherstation ──────────────────────────────────
+      - type: vertical-stack
+        title: "Weatherstation"
+        cards:
+          # Global radiation graph
+          - type: sensor
+            entity: sensor.global_radiation_energy
+            name: "Global Radiation Energy"
+            graph: line
+            unit: "Wh/m²"
+
+          # Manual radiation input
+          - type: entities
+            title: "Weatherstation – Manual Radiation Input"
+            entities:
+              - input_number.global_radiation
+              - input_number.radiation_speed
