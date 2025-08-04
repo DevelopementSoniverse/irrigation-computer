@@ -21,27 +21,30 @@ views:
               - entity: sensor.irrigation_relais1_energy
                 name: "Total Consumption"
 
-          # Manual irrigation trigger
-          - type: button
-            name: "Manual Irrigation"
-            icon: mdi:play-circle
-            tap_action:
-              action: call-service
-              service: script.irrigation_run
+          # ► Beide Karten nebeneinander
+          - type: horizontal-stack
+            cards:
+              # Manual irrigation trigger
+              - type: button
+                name: "Manual Irrigation"
+                icon: mdi:play-circle
+                tap_action:
+                  action: call-service
+                  service: script.irrigation_run
 
-          # Radiation gauge with colour change above specific Wh/m²
-          - type: gauge
-            name: "Radiation since last irrigation"
-            entity: sensor.radiation_since_irrigation
-            min: 0
-            max: 100
-            needle: true
-            segments:
-              - from: 0
-                color: "#9e9e9e"
-              - from: 45
-                color: "#00bcd4"
-                label: "Irrigation"
+              # Radiation gauge
+              - type: gauge
+                name: "Radiation since last irrigation"
+                entity: sensor.radiation_since_irrigation
+                min: 0
+                max: 100
+                needle: true
+                segments:
+                  - from: 0
+                    color: "#9e9e9e"
+                  - from: 45
+                    color: "#00bcd4"
+                    label: "Irrigation"
 
       # ────────── Weatherstation ──────────────────────────────────
       - type: vertical-stack
