@@ -42,6 +42,22 @@ input_number:
     step: 10
     unit_of_measurement: "s"
 
+  irrigation_relais1_power_min:
+    name: Undercurrent threshold Relay 1
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: W
+    mode: slider
+
+  irrigation_relais1_power_max:
+    name: Over-current threshold Relay 1
+    min: 0
+    max: 1000
+    step: 1
+    unit_of_measurement: W
+    mode: slider
+
 input_select:
   tomato_phase:
     name: Tomato Growth Phase
@@ -51,3 +67,4 @@ input_select:
       - Ripening
     initial: Planting
     icon: mdi:sprout
+
