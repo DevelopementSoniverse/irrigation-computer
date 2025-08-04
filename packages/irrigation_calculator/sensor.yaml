@@ -9,6 +9,19 @@ template:
           {{ (states('input_number.global_radiation') | float(0))
              * (states('input_number.radiation_speed') | float(1)) }}
 
+  - sensor:
+      - name: radiation_threshold_current
+        unit_of_measurement: "Wh/m²"
+        state: >
+          {% set phase = states('input_select.tomato_phase') %}
+          {% if phase == 'Planting' %}
+            {{ states('input_number.threshold_rad_phase1')|float(0) }}
+          {% elif phase == 'Fruit Set' %}
+            {{ states('input_number.threshold_rad_phase2')|float(0) }}
+          {% elif phase == 'Ripening' %}
+            {{ states('input_number.threshold_rad_phase3')|float(0) }}
+          {% else %}0{% endif %}
+
 sensor:
   - platform: integration
     name: Global Radiation Energy

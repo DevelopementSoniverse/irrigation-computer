@@ -29,7 +29,7 @@ views:
               action: call-service
               service: script.irrigation_run
 
-          # Radiation gauge with colour change above 45 Wh/m²
+          # Radiation gauge with colour change above specific Wh/m²
           - type: gauge
             name: "Radiation since last irrigation"
             entity: sensor.radiation_since_irrigation
