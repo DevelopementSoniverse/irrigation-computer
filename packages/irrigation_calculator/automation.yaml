@@ -19,3 +19,41 @@ automation:
         before: "19:00:00"
     action:
       - service: script.irrigation_run
+
+  - id: irrigation_relais1_power_monitor    
+    alias: Überwachung Stromaufnahme Irrigation-Relais1
+    mode: restart
+    trigger:
+      - id: start
+        platform: state
+        entity_id: script.irrigation_run
+        to: "on"
+      - id: end
+        platform: state
+        entity_id: script.irrigation_run
+        to: "off"
+    variables:
+      power_entity: sensor.irrigation_relais1_power
+    action:
+      - delay: "00:00:03"
+      - choose:
+          # Check direct after start
+          - conditions: >
+              {{ trigger.id == 'start' and
+                 (states(power_entity)|float(0)) <= 20 }}
+            sequence:
+              - service: persistent_notification.create
+                data:
+                  title: Powerconsumption irrigation_relais1 to less
+                  message: >
+                    Leistung eine Sekunde nach Start ≤ 20 W
+          # Check direct after end
+          - conditions: >
+              {{ trigger.id == 'end' and
+                 (states(power_entity)|float(0)) > 0 }}
+            sequence:
+              - service: persistent_notification.create
+                data:
+                  title: Powerconsumption irrigation_relais1 to high
+                  message: >
+                    Leistung eine Sekunde nach Ende > 0 W
