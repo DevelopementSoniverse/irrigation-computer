@@ -27,7 +27,7 @@ views:
               # Manual irrigation trigger
               - type: button
                 name: "Manual Irrigation"
-                icon: mdi:play-circle
+                icon: mdi:water-pump
                 tap_action:
                   action: call-service
                   service: script.irrigation_run
