@@ -18,18 +18,21 @@ input_number:
 
   threshold_rad_phase1:
     name: Radiation Threshold – Planting (Wh/m²)
+    icon: mdi:sun-wireless
     min: 0
     max: 200
     step: 5
     unit_of_measurement: "Wh/m²"
   threshold_rad_phase2:
     name: Radiation Threshold – Fruit Set (Wh/m²)
+    icon: mdi:sun-wireless
     min: 0
     max: 300
     step: 5
     unit_of_measurement: "Wh/m²"
   threshold_rad_phase3:
     name: Radiation Threshold – Ripening (Wh/m²)
+    icon: mdi:sun-wireless
     min: 0
     max: 250
     step: 5
@@ -37,6 +40,7 @@ input_number:
 
   watering_duration_sec:
     name: Irrigation Duration (s)
+    icon: mdi:clock-end
     min: 10
     max: 600
     step: 10
@@ -44,6 +48,7 @@ input_number:
 
   irrigation_relais1_power_min:
     name: Undercurrent threshold Relay 1
+    icon: mdi:flash-alert
     min: 0
     max: 100
     step: 1
@@ -52,6 +57,7 @@ input_number:
 
   irrigation_relais1_power_max:
     name: Over-current threshold Relay 1
+    icon: mdi:flash-alert
     min: 0
     max: 1000
     step: 1

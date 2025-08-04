@@ -12,18 +12,20 @@ views:
           - type: entities
             title: "Thresholds"
             entities:
-              - input_select.tomato_phase
-              - input_number.threshold_rad_phase1
-              - input_number.threshold_rad_phase2
-              - input_number.threshold_rad_phase3
+              - entity: input_select.tomato_phase
+                name: Tomato Phase
+              - entity: input_number.threshold_rad_phase1
+                name: Planting Radiation
+              - entity: input_number.threshold_rad_phase2
+                name: Fruit Set Radiation
+              - entity: input_number.threshold_rad_phase3
+                name: Ripening Radiation
           - type: entities
-            title: "Irrigation Parameters"
+            title: "Water Pump Settings"
             entities:
-              - input_number.watering_duration_sec
-          - type: entities
-            title: Irrigation Settings
-            entities:
+              - entity: input_number.watering_duration_sec
+                name: Watering Duration
               - entity: input_number.irrigation_relais1_power_min
-                name: Undercurrent Relay 1 (W)
+                name: Undercurrent Relay 1
               - entity: input_number.irrigation_relais1_power_max
-                name: Over-current Relay 1 (W)
+                name: Over-current Relay 1
