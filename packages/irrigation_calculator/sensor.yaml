@@ -32,4 +32,5 @@ sensor:
 
 utility_meter:
   radiation_since_irrigation:
+    name: Radiation since Irrigation
     source: sensor.global_radiation_energy
