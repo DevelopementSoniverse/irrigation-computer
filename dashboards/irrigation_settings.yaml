@@ -3,7 +3,7 @@ views:
   - title: "Settings"
     path: settings
     icon: mdi:cog-outline
-    
+
     cards:
       # ────────── Row 1 ────────────────────────────────────────────
       - type: vertical-stack
@@ -23,9 +23,12 @@ views:
           - type: entities
             title: "Water Pump Settings"
             entities:
+              # Select the relais
+              - entity: input_text.irrigation_relay_entity
+                name: Relay Entity (switch.*)
               - entity: input_number.watering_duration_sec
                 name: Watering Duration
               - entity: input_number.irrigation_relais1_power_min
-                name: Undercurrent Relay 1
+                name: Undercurrent Relay 1
               - entity: input_number.irrigation_relais1_power_max
-                name: Over-current Relay 1
+                name: Over‑current Relay 1              

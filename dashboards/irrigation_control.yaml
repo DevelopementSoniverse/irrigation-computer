@@ -9,19 +9,28 @@ views:
       - type: vertical-stack
         title: "Row 1"
         cards:
-          # System overview (compact)
-          - type: glance
-            title: "System"
-            show_state: true
+          # System overview (compact) – Pumpe kann dynamisch geändert werden
+          - type: custom:config-template-card
+            variables:
+              pump: states['input_text.irrigation_relay_entity'].state
             entities:
-              - entity: switch.irrigation_relais1
-                name: "Pump"
-              - entity: sensor.irrigation_relais1_power
-                name: "Actual Power"
-              - entity: sensor.irrigation_relais1_energy
-                name: "Total Consumption"
+              # Card aktualisiert sich, wenn sich die Auswahl ändert
+              - input_text.irrigation_relay_entity
+              - sensor.irrigation_relais1_power
+              - sensor.irrigation_relais1_energy
+            card:
+              type: glance
+              title: "System"
+              show_state: true
+              entities:
+                - entity: "${pump}"
+                  name: "Pump"
+                - entity: sensor.irrigation_relais1_power
+                  name: "Actual Power"
+                - entity: sensor.irrigation_relais1_energy
+                  name: "Total Consumption"
 
-          # ► Beide Karten nebeneinander
+          # ► Both cards beside each other
           - type: horizontal-stack
             cards:
               # Manual irrigation trigger
@@ -30,7 +39,7 @@ views:
                 icon: mdi:water-pump
                 tap_action:
                   action: call-service
-                  service: script.irrigation_run              
+                  service: script.irrigation_run
 
               # Radiation gauge (dynamic threshold)
               - type: custom:config-template-card
@@ -52,7 +61,6 @@ views:
                       color: "#00bcd4"
                       label: Irrigation
 
-
       # ────────── Weatherstation ──────────────────────────────────
       - type: vertical-stack
         title: "Weatherstation"
@@ -63,7 +71,6 @@ views:
             name: "Global Radiation Energy"
             graph: line
             unit: "Wh/m²"
-
           # Manual radiation input
           - type: entities
             title: "Weatherstation – Manual Radiation Input"

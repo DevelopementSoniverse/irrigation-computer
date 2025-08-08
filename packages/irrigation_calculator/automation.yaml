@@ -20,11 +20,10 @@ automation:
     action:
       - service: script.irrigation_run
 
-  - id: irrigation_relais1_power_monitor    
-    alias: Monitor power consumption Relay 1    
+  - id: irrigation_relais1_power_monitor
+    alias: Monitor power consumption
     mode: restart
     trigger:
-      # script starts / stops
       - id: start
         platform: state
         entity_id: script.irrigation_run
@@ -35,48 +34,40 @@ automation:
         to: "off"
 
     variables:
-      power_entity: sensor.irrigation_relais1_power
+      power_entity: "{{ 'sensor.' ~ states('input_text.irrigation_relay_entity').split('.')[1] ~ '_power' }}"
       min_power: "{{ states('input_number.irrigation_relais1_power_min') | float(0) }}"
       max_power: "{{ states('input_number.irrigation_relais1_power_max') | float(0) }}"
 
     action:
       - choose:
-
-          # ── 3 s after script start ─────────────────────
           - conditions: "{{ trigger.id == 'start' }}"
             sequence:
               - delay: "00:00:03"
-
-              # Undercurrent check
               - choose:
                   - conditions: "{{ states(power_entity) | float(0) <= min_power }}"
                     sequence:
                       - service: persistent_notification.create
                         data:
-                          title: Powerconsumption irrigation_relais1 to less
+                          title: "{{ 'Power consumption ' ~ states('input_text.irrigation_relay_entity') ~ ' too low' }}"
                           message: >
-                            Measured power ({{ states(power_entity) | float }} W)
-                            is ≤ undercurrent threshold ({{ min_power }} W).
-
-              # Over-current check
+                            Measured power ({{ states(power_entity) | float }} W)
+                            is ≤ undercurrent threshold ({{ min_power }} W).
               - choose:
                   - conditions: "{{ states(power_entity) | float(0) >= max_power }}"
                     sequence:
                       - service: persistent_notification.create
                         data:
-                          title: Powerconsumption irrigation_relais1 to high
+                          title: "{{ 'Power consumption ' ~ states('input_text.irrigation_relay_entity') ~ ' too high' }}"
                           message: >
-                            Measured power ({{ states(power_entity) | float }} W)
-                            exceeds over-current threshold ({{ max_power }} W).
-
-          # ── 2 s after script end ───────────────────────
+                            Measured power ({{ states(power_entity) | float }} W)
+                            exceeds over‑current threshold ({{ max_power }} W).
           - conditions: "{{ trigger.id == 'end' }}"
             sequence:
               - delay: "00:00:02"
               - condition: "{{ states(power_entity) | float(0) > 0 }}"
               - service: persistent_notification.create
                 data:
-                  title: Powerconsumption irrigation_relais1 to high
+                  title: "{{ 'Power consumption ' ~ states('input_text.irrigation_relay_entity') ~ ' too high' }}"
                   message: >
                     Power after script end is
-                    {{ states(power_entity) | float }} W (should be 0 W).
+                    {{ states(power_entity) | float }} W (should be 0 W).

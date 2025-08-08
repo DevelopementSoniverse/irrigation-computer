@@ -74,3 +74,9 @@ input_select:
     initial: Planting
     icon: mdi:sprout
 
+input_text:
+  irrigation_relay_entity:
+    name: Irrigation Relay Entity
+    icon: mdi:electric-switch
+    initial: switch.irrigation_relais1
+    mode: text

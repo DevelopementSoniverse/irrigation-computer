@@ -5,12 +5,14 @@ script:
     sequence:
       - service: switch.turn_on
         target:
-          entity_id: switch.irrigation_relais1
+          # Turn on the pump – takes the relais which is selected in the settings
+          entity_id: "{{ states('input_text.irrigation_relay_entity') }}"
       - delay:
           seconds: "{{ states('input_number.watering_duration_sec') | int }}"
       - service: switch.turn_off
         target:
-          entity_id: switch.irrigation_relais1
+          # Toogle off the pump
+          entity_id: "{{ states('input_text.irrigation_relay_entity') }}"
       - service: utility_meter.reset
         target:
           entity_id: sensor.radiation_since_irrigation
