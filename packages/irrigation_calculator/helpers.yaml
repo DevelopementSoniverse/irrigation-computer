@@ -1,3 +1,6 @@
+# All helper entities for the irrigation calculator.
+# NOTE: Replaces the text helper with a dropdown for the relay entity.
+
 input_number:
   global_radiation:
     name: Global Radiation (W/m²)
@@ -23,6 +26,7 @@ input_number:
     max: 200
     step: 5
     unit_of_measurement: "Wh/m²"
+
   threshold_rad_phase2:
     name: Radiation Threshold – Fruit Set (Wh/m²)
     icon: mdi:sun-wireless
@@ -30,6 +34,7 @@ input_number:
     max: 300
     step: 5
     unit_of_measurement: "Wh/m²"
+
   threshold_rad_phase3:
     name: Radiation Threshold – Ripening (Wh/m²)
     icon: mdi:sun-wireless
@@ -74,9 +79,10 @@ input_select:
     initial: Planting
     icon: mdi:sprout
 
-input_text:
   irrigation_relay_entity:
     name: Irrigation Relay Entity
     icon: mdi:electric-switch
+    # Initial placeholder; the sync automation will replace options on startup.
+    options:
+      - switch.irrigation_relais1
     initial: switch.irrigation_relais1
-    mode: text

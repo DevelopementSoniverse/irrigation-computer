@@ -1,4 +1,32 @@
 automation:
+  # Keep the relay dropdown in sync with all available switch entities
+  - id: irrigation_relay_dropdown_sync
+    alias: "Irrigation – Sync relay dropdown (switches)"
+    mode: single
+    trigger:
+      - platform: homeassistant
+        event: start
+      - platform: time_pattern
+        minutes: "/15"
+      # Refresh options when entities are (un)registered
+      - platform: event
+        event_type: entity_registry_updated
+    action:
+      - variables:
+          switches: "{{ states.switch | map(attribute='entity_id') | list }}"
+      - service: input_select.set_options
+        data:
+          entity_id: input_select.irrigation_relay_entity
+          options: "{{ switches }}"
+      - condition: template
+        value_template: >
+          {% set cur = states('input_select.irrigation_relay_entity') %}
+          {{ (switches | count) > 0 and cur not in switches }}
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.irrigation_relay_entity
+          option: "{{ (states.switch | map(attribute='entity_id') | list)[0] }}"
+
   - id: irrigation_by_radiation
     alias: "Irrigation – Radiation Trigger"
     mode: single
@@ -20,8 +48,9 @@ automation:
     action:
       - service: script.irrigation_run
 
-  - id: irrigation_relais1_power_monitor
-    alias: Monitor power consumption
+  # Robust power monitoring with warm-up and graceful skip if no valid sensor
+  - id: irrigation_relais_power_monitor
+    alias: "Monitor power consumption"
     mode: restart
     trigger:
       - id: start
@@ -34,7 +63,14 @@ automation:
         to: "off"
 
     variables:
-      power_entity: "{{ 'sensor.' ~ states('input_text.irrigation_relay_entity').split('.')[1] ~ '_power' }}"
+      selected_switch: "{{ states('input_select.irrigation_relay_entity') }}"
+      # Derive a likely power sensor name from the selected switch object_id
+      fallback_power: >
+        {% if selected_switch not in ['unknown','unavailable',''] %}
+          {{ 'sensor.' ~ selected_switch.split('.')[1] ~ '_power' }}
+        {% else %} {{ None }} {% endif %}
+      # Use fallback. If it doesn't exist or is unknown at runtime, the checks below will skip.
+      power_entity: "{{ fallback_power }}"
       min_power: "{{ states('input_number.irrigation_relais1_power_min') | float(0) }}"
       max_power: "{{ states('input_number.irrigation_relais1_power_max') | float(0) }}"
 
@@ -42,32 +78,48 @@ automation:
       - choose:
           - conditions: "{{ trigger.id == 'start' }}"
             sequence:
-              - delay: "00:00:03"
+              # Wait up to 15s for the power sensor to produce a non-zero reading
+              - wait_template: >
+                  {% set st = states(power_entity) %}
+                  {{ power_entity and st not in ['unknown','unavailable',''] and (st | float(0)) > 0 }}
+                timeout: "00:00:15"
+                continue_on_timeout: true
+
+              # Only evaluate thresholds if we actually have a valid reading
+              - condition: template
+                value_template: >
+                  {% set st = states(power_entity) %}
+                  {{ power_entity and st not in ['unknown','unavailable',''] }}
+
               - choose:
-                  - conditions: "{{ states(power_entity) | float(0) <= min_power }}"
+                  - conditions: "{{ (states(power_entity) | float(0)) <= min_power }}"
                     sequence:
                       - service: persistent_notification.create
                         data:
-                          title: "{{ 'Power consumption ' ~ states('input_text.irrigation_relay_entity') ~ ' too low' }}"
+                          title: "{{ 'Power consumption ' ~ selected_switch ~ ' too low' }}"
                           message: >
-                            Measured power ({{ states(power_entity) | float }} W)
-                            is ≤ undercurrent threshold ({{ min_power }} W).
+                            Measured power ({{ states(power_entity) | float }} W)
+                            is ≤ undercurrent threshold ({{ min_power }} W).
+
               - choose:
-                  - conditions: "{{ states(power_entity) | float(0) >= max_power }}"
+                  - conditions: "{{ (states(power_entity) | float(0)) >= max_power }}"
                     sequence:
                       - service: persistent_notification.create
                         data:
-                          title: "{{ 'Power consumption ' ~ states('input_text.irrigation_relay_entity') ~ ' too high' }}"
+                          title: "{{ 'Power consumption ' ~ selected_switch ~ ' too high' }}"
                           message: >
-                            Measured power ({{ states(power_entity) | float }} W)
-                            exceeds over‑current threshold ({{ max_power }} W).
+                            Measured power ({{ states(power_entity) | float }} W)
+                            exceeds over-current threshold ({{ max_power }} W).
+
           - conditions: "{{ trigger.id == 'end' }}"
             sequence:
               - delay: "00:00:02"
-              - condition: "{{ states(power_entity) | float(0) > 0 }}"
+              - condition: template
+                value_template: >
+                  {% set st = states(power_entity) %}
+                  {{ power_entity and st not in ['unknown','unavailable',''] and (st | float(0)) > 0 }}
               - service: persistent_notification.create
                 data:
-                  title: "{{ 'Power consumption ' ~ states('input_text.irrigation_relay_entity') ~ ' too high' }}"
+                  title: "{{ 'Power consumption ' ~ selected_switch ~ ' too high' }}"
                   message: >
-                    Power after script end is
-                    {{ states(power_entity) | float }} W (should be 0 W).
+                    Power after script end is {{ states(power_entity) | float }} W (should be 0 W).

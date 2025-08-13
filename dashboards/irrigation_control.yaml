@@ -9,13 +9,15 @@ views:
       - type: vertical-stack
         title: "Row 1"
         cards:
-          # System overview (compact) – Pumpe kann dynamisch geändert werden
+          # System overview (compact) – pump entity can be changed dynamically
           - type: custom:config-template-card
+            # Force frequent re-render so the dynamic pump state is reflected quickly
+            update_interval: 1
             variables:
-              pump: states['input_text.irrigation_relay_entity'].state
+              pump: states['input_select.irrigation_relay_entity'].state
             entities:
-              # Card aktualisiert sich, wenn sich die Auswahl ändert
-              - input_text.irrigation_relay_entity
+              # Card re-renders when these change; the update_interval above reduces lag further
+              - input_select.irrigation_relay_entity
               - sensor.irrigation_relais1_power
               - sensor.irrigation_relais1_energy
             card:
