@@ -22,11 +22,33 @@ template:
             {{ states('input_number.threshold_rad_phase3')|float(0) }}
           {% else %}0{% endif %}
 
+  - sensor:
+      - name: time_since_last_irrigation_min
+        unit_of_measurement: "min"
+        state_class: measurement
+        state: >
+          {% set ts = as_timestamp(states('input_datetime.irrigation_last_run'), 0) %}
+          {% if ts > 0 %}
+            {{ ((as_timestamp(now()) - ts) / 60) | round(0) }}
+          {% else %} unknown {% endif %}
+
+  - binary_sensor:
+      - name: Irrigation Fallback Active
+        unique_id: irrigation_fallback_active
+        state: >
+          {% set enabled = is_state('input_boolean.irrigation_fallback_enabled','on') %}
+          {% set s = states('input_datetime.irrigation_fallback_start') %}
+          {% set e = states('input_datetime.irrigation_fallback_end') %}
+          {% set n = now().strftime('%H:%M:%S') %}
+          {% set in_window = (s <= e and s <= n <= e) or (s > e and (n >= s or n <= e)) %}
+          {{ enabled and in_window }}
+        icon: mdi:clock-alert-outline
+
 sensor:
   - platform: integration
     name: Global Radiation Energy
     source: sensor.global_radiation_scaled
-    unit_time: h      # → Wh/m²
+    unit_time: h
     method: trapezoidal
     round: 2
 

@@ -11,12 +11,10 @@ views:
         cards:
           # System overview (compact) – pump entity can be changed dynamically
           - type: custom:config-template-card
-            # Force frequent re-render so the dynamic pump state is reflected quickly
             update_interval: 1
             variables:
               pump: states['input_select.irrigation_relay_entity'].state
             entities:
-              # Card re-renders when these change; the update_interval above reduces lag further
               - input_select.irrigation_relay_entity
               - sensor.irrigation_relais1_power
               - sensor.irrigation_relais1_energy
@@ -32,16 +30,15 @@ views:
                 - entity: sensor.irrigation_relais1_energy
                   name: "Total Consumption"
 
-          # ► Both cards beside each other
           - type: horizontal-stack
             cards:
-              # Manual irrigation trigger
+              # Manual irrigation trigger (sets Reason=Manual)
               - type: button
                 name: "Manual Irrigation"
                 icon: mdi:water-pump
                 tap_action:
                   action: call-service
-                  service: script.irrigation_run
+                  service: script.irrigation_run_manual
 
               # Radiation gauge (dynamic threshold)
               - type: custom:config-template-card
@@ -63,17 +60,35 @@ views:
                       color: "#00bcd4"
                       label: Irrigation
 
+          # Run information (no timestamp shown here)
+          - type: entities
+            title: "Run Info"
+            entities:
+              - entity: input_select.irrigation_last_reason
+                name: Last Reason
+              - entity: sensor.time_since_last_irrigation_min
+                name: Minutes Since Last Run
+              - entity: binary_sensor.irrigation_fallback_active
+                name: Fallback Window Active
+
+          # Reason timeline (history)
+          - type: history-graph
+            title: "History"
+            hours_to_show: 8
+            refresh_interval: 60
+            entities:
+              - entity: input_select.irrigation_last_reason
+                name: Reason
+
       # ────────── Weatherstation ──────────────────────────────────
       - type: vertical-stack
         title: "Weatherstation"
         cards:
-          # Global radiation graph
           - type: sensor
             entity: sensor.global_radiation_energy
             name: "Global Radiation Energy"
             graph: line
             unit: "Wh/m²"
-          # Manual radiation input
           - type: entities
             title: "Weatherstation – Manual Radiation Input"
             entities:

@@ -16,3 +16,13 @@ script:
       - service: utility_meter.reset
         target:
           entity_id: sensor.radiation_since_irrigation
+
+  irrigation_run_manual:
+    alias: "Irrigation Run (Manual)"
+    mode: single
+    sequence:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.irrigation_last_reason
+          option: "Manual"
+      - service: script.irrigation_run

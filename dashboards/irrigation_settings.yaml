@@ -20,10 +20,10 @@ views:
                 name: Fruit Set Radiation
               - entity: input_number.threshold_rad_phase3
                 name: Ripening Radiation
+
           - type: entities
             title: "Water Pump Settings"
             entities:
-              # Select the relay (populated dynamically by automation)
               - entity: input_select.irrigation_relay_entity
                 name: Relay Entity (switch.*)
               - entity: input_number.watering_duration_sec
@@ -32,3 +32,15 @@ views:
                 name: Undercurrent Relay 1
               - entity: input_number.irrigation_relais1_power_max
                 name: Over-current Relay 1
+
+          - type: entities
+            title: "Fallback Settings"
+            entities:
+              - entity: input_boolean.irrigation_fallback_enabled
+                name: Fallback Enabled
+              - entity: input_number.irrigation_fallback_minutes
+                name: Fallback Interval (min, 5–240)
+              - entity: input_datetime.irrigation_fallback_start
+                name: Active From
+              - entity: input_datetime.irrigation_fallback_end
+                name: Active Until

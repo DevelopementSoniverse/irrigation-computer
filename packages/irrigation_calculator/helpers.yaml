@@ -1,5 +1,5 @@
 # All helper entities for the irrigation calculator.
-# NOTE: Replaces the text helper with a dropdown for the relay entity.
+# NOTE: Adds fallback helpers and logging helpers.
 
 input_number:
   global_radiation:
@@ -69,6 +69,34 @@ input_number:
     unit_of_measurement: W
     mode: slider
 
+  irrigation_fallback_minutes:
+    name: Fallback Interval (min)
+    icon: mdi:timer-outline
+    min: 5         # constrained per request
+    max: 240       # constrained per request
+    step: 5
+    unit_of_measurement: "min"
+    initial: 60
+
+input_boolean:
+  irrigation_fallback_enabled:
+    name: Irrigation Fallback Enabled
+    icon: mdi:clock-alert
+
+input_datetime:
+  irrigation_fallback_start:
+    name: Fallback Active From
+    has_date: false
+    has_time: true
+  irrigation_fallback_end:
+    name: Fallback Active Until
+    has_date: false
+    has_time: true
+  irrigation_last_run:
+    name: Last Irrigation Timestamp
+    has_date: true
+    has_time: true
+
 input_select:
   tomato_phase:
     name: Tomato Growth Phase
@@ -86,3 +114,12 @@ input_select:
     options:
       - switch.irrigation_relais1
     initial: switch.irrigation_relais1
+
+  irrigation_last_reason:
+    name: Last Irrigation Reason
+    icon: mdi:information-outline
+    options:
+      - Manual
+      - Radiation
+      - Fallback
+    initial: Manual
