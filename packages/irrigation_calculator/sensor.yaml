@@ -1,15 +1,5 @@
 template:
   - sensor:
-      - name: Global Radiation Scaled
-        unique_id: global_radiation_scaled
-        unit_of_measurement: "W/m²"
-        state_class: measurement
-        device_class: irradiance
-        state: >
-          {{ (states('input_number.global_radiation') | float(0))
-             * (states('input_number.radiation_speed') | float(1)) }}
-
-  - sensor:
       - name: radiation_threshold_current
         unit_of_measurement: "Wh/m²"
         state: >
@@ -47,7 +37,7 @@ template:
 sensor:
   - platform: integration
     name: Global Radiation Energy
-    source: sensor.global_radiation_scaled
+    source: sensor.gw3000a_solar_radiation
     unit_time: h
     method: trapezoidal
     round: 2

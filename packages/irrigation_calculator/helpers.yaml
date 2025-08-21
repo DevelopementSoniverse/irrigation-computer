@@ -2,23 +2,6 @@
 # NOTE: Adds fallback helpers and logging helpers.
 
 input_number:
-  global_radiation:
-    name: Global Radiation (W/m²)
-    icon: mdi:white-balance-sunny
-    min: 0
-    max: 1200
-    step: 10
-    unit_of_measurement: "W/m²"
-
-  radiation_speed:
-    name: Radiation Time Factor (×)
-    icon: mdi:speedometer
-    min: 1
-    max: 50
-    step: 1
-    unit_of_measurement: "x"
-    initial: 1
-
   threshold_rad_phase1:
     name: Radiation Threshold – Planting (Wh/m²)
     icon: mdi:sun-wireless

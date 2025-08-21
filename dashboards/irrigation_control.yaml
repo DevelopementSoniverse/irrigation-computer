@@ -60,17 +60,6 @@ views:
                       color: "#00bcd4"
                       label: Irrigation
 
-          # Run information (no timestamp shown here)
-          - type: entities
-            title: "Run Info"
-            entities:
-              - entity: input_select.irrigation_last_reason
-                name: Last Reason
-              - entity: sensor.time_since_last_irrigation_min
-                name: Minutes Since Last Run
-              - entity: binary_sensor.irrigation_fallback_active
-                name: Fallback Window Active
-
           # Reason timeline (history)
           - type: history-graph
             title: "History"
@@ -84,13 +73,17 @@ views:
       - type: vertical-stack
         title: "Weatherstation"
         cards:
-          - type: sensor
-            entity: sensor.global_radiation_energy
-            name: "Global Radiation Energy"
-            graph: line
-            unit: "Wh/m²"
-          - type: entities
-            title: "Weatherstation – Manual Radiation Input"
-            entities:
-              - input_number.global_radiation
-              - input_number.radiation_speed
+          - type: horizontal-stack
+            cards:
+              - type: sensor
+                entity: sensor.global_radiation_energy
+                name: "Global Radiation Energy"
+                graph: line
+                unit: "Wh/m²"
+              
+              - type: sensor
+                entity: sensor.gw3000a_solar_radiation
+                name: Global Radiation
+                graph: line
+                detail: 2
+                hours_to_show: 24
