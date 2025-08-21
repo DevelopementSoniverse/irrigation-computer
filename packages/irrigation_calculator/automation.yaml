@@ -157,3 +157,86 @@ automation:
                   title: "{{ 'Power consumption ' ~ selected_switch ~ ' too high' }}"
                   message: >
                     Power after script end is {{ states(power_entity) | float }} W (should be 0 W).
+
+  - id: irrigation_switch_unavailable_alert
+    alias: "Irrigation – Alert if relay switch is unavailable"
+    mode: single
+    trigger:
+      # Fire if the relay turns unavailable for at least 5 minutes
+      - platform: state
+        entity_id: switch.irrigation_relais1
+        to: "unavailable"
+        for: "00:05:00"
+      # Also check on startup to catch existing issues
+      - platform: homeassistant
+        event: start
+    condition: []
+    action:
+      - service: persistent_notification.create
+        data:
+          # Use a stable notification_id to avoid duplicates
+          notification_id: irrigation_switch_unavailable
+          title: "Irrigation relay not available"
+          message: >
+            The entity 'switch.irrigation_relais1' is unavailable.
+            Please verify the device connection or entity registry.
+
+  - id: gw3000a_radiation_stale_alert
+    alias: "GW3000A – Alert if solar radiation is unavailable or stale"
+    mode: single
+    trigger:
+      # Periodic health check every 30 minutes
+      - platform: time_pattern
+        minutes: "/30"
+      # Also verify on HA startup
+      - platform: homeassistant
+        event: start
+    variables:
+      # Current state as string and last update timestamp in seconds
+      rad_state: "{{ states('sensor.gw3000a_solar_radiation') }}"
+      last_upd: "{{ as_timestamp(states.sensor.gw3000a_solar_radiation.last_updated, 0) }}"
+      age_sec: "{{ (as_timestamp(now()) - last_upd) if last_upd > 0 else 1e12 }}"
+    condition:
+      - condition: template
+        value_template: >
+          {# Condition is true if entity is unavailable/unknown OR older than 2 hours #}
+          {{ rad_state in ['unavailable','unknown',''] or age_sec > 2*60*60 }}
+    action:
+      - service: persistent_notification.create
+        data:
+          notification_id: gw3000a_radiation_stale
+          title: "Solar radiation data missing or outdated"
+          message: >
+            The entity 'sensor.gw3000a_solar_radiation' is
+            {{ 'unavailable/unknown' if rad_state in ['unavailable','unknown',''] else 'stale' }}.
+            Age: {{ (age_sec/60) | round(0) }} minutes.
+            Please check the GW3000A station and network connectivity.
+
+  - id: gw3000a_wh65_battery_low_alert
+    alias: "GW3000A WH65 – Alert on LOW battery"
+    mode: single
+
+    trigger:
+      # Fire when battery changes from normal (off) to low (on)
+      - platform: state
+        entity_id: binary_sensor.gw3000a_wh65_battery
+        from: "off"
+        to: "on"
+      # Also check on Home Assistant startup in case it's already low
+      - platform: homeassistant
+        event: start
+
+    condition:
+      # Ensure we only alert if it is actually low at evaluation time
+      - condition: state
+        entity_id: binary_sensor.gw3000a_wh65_battery
+        state: "on"
+
+    action:
+      - service: persistent_notification.create
+        data:
+          notification_id: gw3000a_wh65_battery_low
+          title: "WH65 battery low"
+          message: >
+            The entity 'binary_sensor.gw3000a_wh65_battery' reports LOW (state: on).
+            Please check/replace the WH65 batteries and verify the station.
