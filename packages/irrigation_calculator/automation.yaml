@@ -121,7 +121,7 @@ automation:
               - wait_template: >
                   {% set st = states(power_entity) %}
                   {{ power_entity and st not in ['unknown','unavailable',''] and (st | float(0)) > 0 }}
-                timeout: "00:00:15"
+                timeout: "00:00:30"
                 continue_on_timeout: true
               - condition: template
                 value_template: >
@@ -182,7 +182,7 @@ automation:
             Please verify the device connection or entity registry.
 
   - id: gw3000a_radiation_stale_alert
-    alias: "GW3000A – Alert if solar radiation is unavailable or stale"
+    alias: "GW3000A – Alert if solar radiation is unavailable or stale (daytime only)"
     mode: single
     trigger:
       # Periodic health check every 30 minutes
@@ -191,16 +191,25 @@ automation:
       # Also verify on HA startup
       - platform: homeassistant
         event: start
+
     variables:
       # Current state as string and last update timestamp in seconds
       rad_state: "{{ states('sensor.gw3000a_solar_radiation') }}"
       last_upd: "{{ as_timestamp(states.sensor.gw3000a_solar_radiation.last_updated, 0) }}"
       age_sec: "{{ (as_timestamp(now()) - last_upd) if last_upd > 0 else 1e12 }}"
+
     condition:
+      # Trigger the alert only in the day
+      - condition: sun
+        after: sunrise
+      - condition: sun
+        before: sunset
+
+      # if sensor ist unavailable or unknown
       - condition: template
         value_template: >
-          {# Condition is true if entity is unavailable/unknown OR older than 2 hours #}
           {{ rad_state in ['unavailable','unknown',''] or age_sec > 2*60*60 }}
+
     action:
       - service: persistent_notification.create
         data:
