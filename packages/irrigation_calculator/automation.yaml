@@ -41,9 +41,12 @@ automation:
             } %}
           {{ rad >= thresholds.get(phase, 1e9) }}
     condition:
-      - condition: time
-        after: "07:00:00"
-        before: "19:00:00"
+      - condition: template
+        value_template: >-
+          {% set s = states('input_datetime.irrigation_fallback_start') %}
+          {% set e = states('input_datetime.irrigation_fallback_end') %}
+          {% set n = now().strftime('%H:%M:%S') %}
+          {{ (s <= e and s <= n <= e) or (s > e and (n >= s or n <= e)) }}
     action:
       - service: input_select.select_option
         data:
