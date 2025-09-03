@@ -65,6 +65,13 @@ views:
             entities:
               - entity: input_select.irrigation_last_reason
                 name: Reason
+            
+          - type: logbook
+            title: Letzte Bewässerungsvorgänge (24h)
+            hours_to_show: 24
+            entities:
+              - script.irrigation_run
+
 
       # ────────── Weatherstation ──────────────────────────────────
       - type: vertical-stack
