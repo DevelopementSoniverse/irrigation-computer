@@ -16,8 +16,7 @@ views:
               pump: states['input_select.irrigation_relay_entity'].state
             entities:
               - input_select.irrigation_relay_entity
-              - sensor.irrigation_relais1_power
-              - sensor.irrigation_relais1_energy
+              - sensor.irrigation_power
             card:
               type: glance
               title: "System"
@@ -25,10 +24,8 @@ views:
               entities:
                 - entity: "${pump}"
                   name: "Pump"
-                - entity: sensor.irrigation_relais1_power
+                - entity: sensor.irrigation_power
                   name: "Actual Power"
-                - entity: sensor.irrigation_relais1_energy
-                  name: "Total Consumption"
 
           - type: horizontal-stack
             cards:
@@ -80,7 +77,7 @@ views:
                 name: "Global Radiation Energy"
                 graph: line
                 unit: "Wh/m²"
-              
+
               - type: sensor
                 entity: sensor.gw3000a_solar_radiation
                 name: Global Radiation

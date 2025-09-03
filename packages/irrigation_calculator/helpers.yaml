@@ -98,6 +98,8 @@ input_select:
       - switch.irrigation_relais1
     initial: switch.irrigation_relais1
 
+  
+
   irrigation_last_reason:
     name: Last Irrigation Reason
     icon: mdi:information-outline

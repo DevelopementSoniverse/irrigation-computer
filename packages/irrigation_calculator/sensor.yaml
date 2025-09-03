@@ -34,6 +34,35 @@ template:
           {{ enabled and in_window }}
         icon: mdi:clock-alert-outline
 
+  - sensor:
+      - name: "Irrigation Power"
+        unique_id: irrigation_power_value
+        unit_of_measurement: "W"
+        device_class: power
+        state_class: measurement
+        state: >-
+          {% set relay = states('input_select.irrigation_relay_entity') %}
+          {% if relay and '.' in relay %}
+            {% set eid = 'sensor.' ~ relay.split('.')[1] ~ '_power' %}
+            {{ states(eid) | float(0) }}
+          {% else %}
+            {{ 0 }}
+          {% endif %}
+        availability: >-
+          {% set relay = states('input_select.irrigation_relay_entity') %}
+          {% if relay and '.' in relay %}
+            {% set eid = 'sensor.' ~ relay.split('.')[1] ~ '_power' %}
+            {{ has_value(eid) }}
+          {% else %}
+            false
+          {% endif %}
+        attributes:
+          source_entity_id: >-
+            {% set relay = states('input_select.irrigation_relay_entity') %}
+            {% if relay and '.' in relay %}
+              {{ 'sensor.' ~ relay.split('.')[1] ~ '_power' }}
+            {% endif %}
+
 sensor:
   - platform: integration
     name: Global Radiation Energy
