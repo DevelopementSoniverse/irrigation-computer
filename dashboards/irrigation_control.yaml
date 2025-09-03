@@ -26,16 +26,36 @@ views:
                   name: "Pump"
                 - entity: sensor.irrigation_power
                   name: "Actual Power"
+          # Manual irrigation trigger (sets Reason=Manual)
+          - type: button
+            name: "Manual Irrigation"
+            icon: mdi:water-pump
+            tap_action:
+              action: call-service
+              service: script.irrigation_run_manual
 
           - type: horizontal-stack
             cards:
-              # Manual irrigation trigger (sets Reason=Manual)
-              - type: button
-                name: "Manual Irrigation"
-                icon: mdi:water-pump
-                tap_action:
-                  action: call-service
-                  service: script.irrigation_run_manual
+              # Minutes since last Irrigation gauge (dynamic threshold)
+              - type: custom:config-template-card
+                variables:
+                  threshold: states['input_number.irrigation_fallback_minutes'].state
+                entities:
+                  - sensor.time_since_last_irrigation_min
+                  - input_number.irrigation_fallback_minutes
+                card:
+                  type: gauge
+                  entity: sensor.time_since_last_irrigation_min
+                  needle: true
+                  min: 0
+                  max: ${Number(threshold) + 10}
+                  name: since last irrigation
+                  segments:
+                    - from: 0
+                      color: "#9e9e9e"
+                    - from: ${Number(threshold)}
+                      color: "#00bcd4"
+                      label: Irrigation
 
               # Radiation gauge (dynamic threshold)
               - type: custom:config-template-card
@@ -65,13 +85,12 @@ views:
             entities:
               - entity: input_select.irrigation_last_reason
                 name: Reason
-            
+
           - type: logbook
             title: Letzte Bewässerungsvorgänge (24h)
             hours_to_show: 24
             entities:
               - script.irrigation_run
-
 
       # ────────── Weatherstation ──────────────────────────────────
       - type: vertical-stack
