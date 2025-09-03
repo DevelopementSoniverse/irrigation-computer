@@ -1,0 +1,21 @@
+- id: '1756919767740'
+  alias: Sicherheits Automation
+  description: ''
+  triggers:
+  - type: power
+    device_id: af3c3ae92ebfb4b7322c15ca0cadacdb
+    entity_id: 4a9df6e9ee51ff1f9415c70bc750c6ad
+    domain: sensor
+    trigger: device
+    above: 100
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+  conditions: []
+  actions:
+  - type: turn_off
+    device_id: af3c3ae92ebfb4b7322c15ca0cadacdb
+    entity_id: 4442912e99f135eef81c29cf2d117524
+    domain: switch
+  mode: single
