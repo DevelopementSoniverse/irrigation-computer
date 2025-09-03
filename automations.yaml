@@ -18,4 +18,8 @@
     device_id: af3c3ae92ebfb4b7322c15ca0cadacdb
     entity_id: 4442912e99f135eef81c29cf2d117524
     domain: switch
+  - action: notify.mobile_app_stefan_greif
+    metadata: {}
+    data:
+      message: Sicherheits Automation ausgelöst
   mode: single
