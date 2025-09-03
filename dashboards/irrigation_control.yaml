@@ -9,7 +9,7 @@ views:
       - type: vertical-stack
         title: "Row 1"
         cards:
-          # System overview (compact) – pump entity can be changed dynamically
+         # System overview (compact) – pump entity can be changed dynamically
           - type: custom:config-template-card
             update_interval: 1
             variables:
@@ -17,6 +17,7 @@ views:
             entities:
               - input_select.irrigation_relay_entity
               - sensor.irrigation_power
+              - script.irrigation_run_manual            # <-- Neu aufgenommen (sauberes Tracking)
             card:
               type: glance
               title: "System"
@@ -26,13 +27,9 @@ views:
                   name: "Pump"
                 - entity: sensor.irrigation_power
                   name: "Actual Power"
-          # Manual irrigation trigger (sets Reason=Manual)
-          - type: button
-            name: "Manual Irrigation"
-            icon: mdi:water-pump
-            tap_action:
-              action: call-service
-              service: script.irrigation_run_manual
+                - entity: script.irrigation_run_manual  # <-- Neu: steht rechts neben "Actual Power"
+                  name: "Manual Irrigation"
+                  icon: mdi:water-pump
 
           - type: horizontal-stack
             cards:
